@@ -1,0 +1,42 @@
+main{
+    display: inline-block;
+}
+.board{
+}
+.cell{
+    border: solid black 3px;
+    background: silver;
+    width: 15px;
+    height: 15px;
+    float: left;
+    color: silver;
+    
+}
+
+.clearThis{
+    clear: both;
+}
+
+.left{
+    border-left: silver 3px solid;
+}
+
+.right{
+    border-right: silver 3px solid;
+}
+
+.top{
+    border-top: silver 3px solid;
+}
+
+.bottom{
+    border-bottom: silver 3px solid;
+}
+
+/* .visited{
+    background: red;
+} */
+
+.viableNeighbour{
+    background: violet;
+}
