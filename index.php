@@ -16,12 +16,12 @@
             <input type="text" name="x" placeholder="height"/> 
             <input type="text" name="y" placeholder="width"/>
             <input type="radio" name="steps" value="1" > Step by step </input>
-            <input type="radio" name="steps" value="0" > Only result </input>
+            <input type="radio" checked="checked" name="steps" value="0" > Only result </input>
             <input type="submit" value="Submit"/> 
             </form>
             <form action="" method="get">
             <input type="radio" name="steps" value="1" > Step by step </input>
-            <input type="radio" name="steps" value="0" > Only result </input>
+            <input type="radio" name="steps" checked="checked" value="0" > Only result </input>
             <input type="submit" value="Random 2-30" name="random"/> 
             </form>
             ';
