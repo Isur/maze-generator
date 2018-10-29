@@ -8,7 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <main>
         <?php 
             include("mazeGenerator.php"); 
             $maze = new Maze();
@@ -26,24 +25,28 @@
             </form>
             ';
             echo '<br /> <br />';
-            if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['steps'])){
-                $x = $_GET['x'];
-                $y = $_GET['y'];
-                $steps = $_GET['steps'];
-                if(is_numeric($x) && is_numeric($y)){
-                    $maze->generate($x,$y,$steps);
-                }else 
-                echo 'Fill the form with integer values';                
-            } else if(isset($_GET['random']) && isset($_GET['steps'])){
-                $x = rand(2,30);
-                $y = rand(2,30);
-                $steps = $_GET['steps'];
-                $maze->generate($x,$y, $steps);
-            }
-            else
-            {
-                echo 'fill the form';
-            }
+            ?>
+    <main>
+        <?php
+                if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['steps'])){
+                    $x = $_GET['x'];
+                    $y = $_GET['y'];
+                    $steps = $_GET['steps'];
+                    if(is_numeric($x) && is_numeric($y)){
+                        $maze->generate($x,$y,$steps);
+                    }else 
+                    echo 'Fill the form with integer values';                
+                } else if(isset($_GET['random']) && isset($_GET['steps'])){
+                    $x = rand(2,30);
+                    $y = rand(2,30);
+                    $steps = $_GET['steps'];
+                    $maze->generate($x,$y, $steps);
+                }
+                else
+                {
+                    echo 'fill the form';
+                }
+
         ?>
     </main>
 </body>

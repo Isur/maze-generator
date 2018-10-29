@@ -1,20 +1,28 @@
 main{
     display: inline-block;
+    position: fixed;
+    max-width: 90%;
+    max-height: 80%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    border: solid silver 10px;
 }
 .board{
+    border: solid black 6px;
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 0.7;
 }
 .cell{
     border: solid black 3px;
     background: silver;
-    width: 15px;
-    height: 15px;
-    float: left;
+    width: 10px;
+    height: 10px;
     color: silver;
-    
+    display: inline-block;
 }
 
 .clearThis{
-    clear: both;
 }
 
 .left{

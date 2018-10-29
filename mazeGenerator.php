@@ -91,10 +91,8 @@ class Board{
         $this->width = $width;
         $this->height = $height;
         $this->createBoard();
-        //$this->printBoard();
         $randX = rand(0, $this->height - 1);
         $randY = rand(0, $this->width - 1);
-        // echo ' '.$randX.' '.$randY;
         $this->recursiveBacktracker($randX, $randY);
         $this->printBoard();
     }
@@ -114,8 +112,9 @@ class Board{
                 echo '<div class="'.$this->maze[$i][$j]->GET_CSS_CLASS().'"></div>';
                 $this->maze[$i][$j]->ToogleAsNeighbourOff();
             }
-            echo '</board><br class="clearThis" />';
+            echo '<br class="clearThis" />';
         }
+        echo '</div>';
     }
 
     private function checkNeighbours($i,$j){
