@@ -9,11 +9,8 @@
 </head>
 <body>
 <header>
-
-        <?php 
-        if(!isset($_POST['load'])){
-
-            include("mazeGenerator.php"); 
+        <?php
+            include("mazeGenerator.php");
             $maze = new Maze();
             echo '<form action="" method="get">
             <input type="text" name="x" placeholder="height"/> 
@@ -29,12 +26,16 @@
             </form>
             ';
             echo '<br /> <br />';
-        }
             ?>
 </header>
     <main>
         <?php
-                if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['steps'])){
+        if(isset($_POST['load'])){
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($_FILES["loadMaze"]["name"]);
+            move_uploaded_file($_FILES["loadMaze"]["tmp_name"], $target_file);
+            $maze->Load($target_file);
+        }else if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['steps'])){
                     $x = $_GET['x'];
                     $y = $_GET['y'];
                     $steps = $_GET['steps'];
@@ -56,14 +57,10 @@
         ?>
     </main>
     <footer>
-    <?php 
-        if(isset($_GET['load'])){
-            $maze->Load("maze.json");
-        }
-
+    <?php
         echo '
-        <form action="" method="get">
-        <input type="file" />
+        <form action="" method="post" enctype="multipart/form-data">
+        <input type="file" name="loadMaze" id="loadMaze"/>
             <input type="submit" value="Load" name="load" />
         </form>
         ';

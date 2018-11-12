@@ -1,2 +1,5 @@
+# FOLDERS
 .idea/
+uploads/
+# FILES
 /maze.json

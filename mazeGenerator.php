@@ -144,6 +144,11 @@ class Board{
     private function SaveMaze(){
 
         $json_string = "[";
+        $json_string .= '
+        {
+         "height": '.$this->height.', 
+         "width": '.$this->width.'
+         },';
 
         for($i = 0; $i < $this->height; $i++){
             for($j = 0; $j < $this->width; $j++){
@@ -156,17 +161,20 @@ class Board{
 
     public function LoadMaze($sourceFile){
         $json_string = file_get_contents($sourceFile);
-        $res = json_decode($json_string)[1];
         $this->maze = array();
-        foreach(json_decode($json_string) as $newCell){
-            //echo $newCell->{'PosX'}.' '.$newCell->{'PosY'}.'<br />';
-            $posX = $newCell->{'PosX'};
-            $posY = $newCell->{'PosY'};
-            $WallUp = $newCell->{'WallUp'};
-            $WallDown = $newCell->{'WallDown'};
-            $WallLeft = $newCell->{'WallLeft'};
-            $WallRight = $newCell->{'WallRight'};
-            $this->maze[$posX][$posY] = Cell::Loader($posX,$posY, $WallDown, $WallLeft, $WallRight, $WallUp);
+        $decoded = json_decode($json_string);
+        $this->height = $decoded[0]->{'height'};
+        $this->width = $decoded[0]->{'width'};
+        foreach($decoded as $newCell){
+            if(isset($newCell->{'PosX'})){
+                $posX = $newCell->{'PosX'};
+                $posY = $newCell->{'PosY'};
+                $WallUp = $newCell->{'WallUp'};
+                $WallDown = $newCell->{'WallDown'};
+                $WallLeft = $newCell->{'WallLeft'};
+                $WallRight = $newCell->{'WallRight'};
+                $this->maze[$posX][$posY] = Cell::Loader($posX,$posY, $WallDown, $WallLeft, $WallRight, $WallUp);
+            }
         }
         $this->printBoard();
     }
@@ -181,11 +189,6 @@ class Board{
 
     private function printBoard(){
         echo '<div class="board">';
-//        for($i = 0; $i < $this->height; $i++){
-//            for($j = 0; $j < $this->width; $j++){
-//                echo $this->maze[$i][$j]->TO_JSON();
-//            }
-//        }
         for($i = 0; $i < $this->height; $i++){
             for($j = 0; $j < $this->width; $j++){
                 echo '<div class="'.$this->maze[$i][$j]->GET_CSS_CLASS().'"></div>';
@@ -196,7 +199,12 @@ class Board{
         echo '</div>';
     }
 
-    private function checkNeighbours($i,$j){
+    /**
+     * @param $i
+     * @param $j
+     * @return array
+     */
+    private function checkNeighbours($i, $j){
         $neighbors = array();
         if($i > 0){
             $n = $this->maze[$i - 1][$j];
