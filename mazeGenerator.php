@@ -64,10 +64,10 @@ class Cell{
         if($direction == 3){
             return $this->WallRight ? 1 : 0;
         }
+        return null;
     }
     
     public function TO_JSON(){
-        
         $json_string = '{
             "WallUp": '.$this->GetWall(0).',
             "WallDown": '.$this->GetWall(2).',
@@ -105,18 +105,20 @@ class Cell{
         }
         return $stringClass;
     }
+
     public function Visit(){
         $this->visited = true;
         $this->viableNeighbour = false;
     }
 
-    public function ToogleAsNeighbour(){
+    public function ToggleAsNeighbour(){
         $this->viableNeighbour = !$this->viableNeighbour;
     }
-    public function ToogleAsNeighbourOff(){
+    public function ToggleAsNeighbourOff(){
         $this->viableNeighbour = false;
     }
 }
+
 class Board{
     private $width;
     private $height;
@@ -142,14 +144,12 @@ class Board{
     }
 
     private function SaveMaze(){
-
         $json_string = "[";
         $json_string .= '
         {
          "height": '.$this->height.', 
          "width": '.$this->width.'
          },';
-
         for($i = 0; $i < $this->height; $i++){
             for($j = 0; $j < $this->width; $j++){
                 $json_string .= $this->maze[$i][$j]->TO_JSON().',';
@@ -199,11 +199,6 @@ class Board{
         echo '</div>';
     }
 
-    /**
-     * @param $i
-     * @param $j
-     * @return array
-     */
     private function checkNeighbours($i, $j){
         $neighbors = array();
         if($i > 0){
@@ -237,7 +232,6 @@ class Board{
         return $neighbors;
     }
 
-
     private function nextCell($direction, $x, $y){
         if($direction == 0){
             return $this->maze[$x - 1][$y];
@@ -269,7 +263,6 @@ class Board{
         $direction = $neighbors[array_rand($neighbors, 1)];
         $nextCell = $this->nextCell($direction, $startX, $startY);
         $currentCell->WallOff($direction);
-        // echo ''.$startX.' '.$startY.' '.$direction;
         $nextCell->WallOff(($direction + 2) % 4);
         
         $this->recursiveBacktracker($nextCell->GetX(), $nextCell->GetY());
@@ -278,7 +271,6 @@ class Board{
             return;
         }
         $direction = $neighbors[array_rand($neighbors, 1)];
-        // echo ''.$startX.' '.$startY.' '.$direction;
         $currentCell->WallOff($direction);
         $nextCell = $this->nextCell($direction, $startX, $startY);
         $nextCell->WallOff(($direction + 2) % 4);
@@ -289,6 +281,7 @@ class Board{
 
 class Maze{
     private $board;
+
     public function generate($height, $width, $stepByStep){
         set_time_limit(0);
         $this->board = new Board();
@@ -299,8 +292,5 @@ class Maze{
         $this->board = new Board();
         $this->board->LoadMaze($file);
      }
-
 }
-
-
 ?>
