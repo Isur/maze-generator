@@ -8,7 +8,11 @@
     <title>Document</title>
 </head>
 <body>
+<header>
+
         <?php 
+        if(!isset($_POST['load'])){
+
             include("mazeGenerator.php"); 
             $maze = new Maze();
             echo '<form action="" method="get">
@@ -25,7 +29,9 @@
             </form>
             ';
             echo '<br /> <br />';
+        }
             ?>
+</header>
     <main>
         <?php
                 if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['steps'])){
@@ -49,5 +55,19 @@
 
         ?>
     </main>
+    <footer>
+    <?php 
+        if(isset($_GET['load'])){
+            $maze->Load("maze.json");
+        }
+
+        echo '
+        <form action="" method="get">
+        <input type="file" />
+            <input type="submit" value="Load" name="load" />
+        </form>
+        ';
+    ?>
+    </footer>
 </body>
 </html>
